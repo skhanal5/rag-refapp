@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "llm-backend"
+name = "rag-refapp"
 version = "0.1.0"
 description = ""
 authors = ["Subodh Khanal <skhanal5@terpmail.umd.edu>"]
