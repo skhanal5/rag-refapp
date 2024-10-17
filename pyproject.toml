@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "rag-refapp"
+name = "rag_refapp"
 version = "0.1.0"
 description = ""
 authors = ["Subodh Khanal <skhanal5@terpmail.umd.edu>"]
