@@ -23,9 +23,19 @@ class VectorDatabase:
         response = self.client.index(index=index_name, id=doc_id)
         return response
 
-    def search_document(self, body: str, index_id: str) -> any:
+    def search_document(self, index_id: str, query: str) -> any:
+        query = {
+            "size": 5,
+            "query": {
+                "multi_match": {
+                    "query": query,
+                    "fields": ["title^2", "director"],
+                }
+            },
+        }
+
         response = self.client.search(
-            body=body,
+            body=query,
             index=index_id,
         )
         return response
