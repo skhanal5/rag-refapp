@@ -1,4 +1,4 @@
-from opensearch.database_config import DatabaseConfig
+from .database_config import DatabaseConfig
 from opensearchpy import OpenSearch
 
 
@@ -6,9 +6,6 @@ from opensearchpy import OpenSearch
 class VectorDatabase:
 
     client: OpenSearch
-
-    # TODO: make static
-    pipeline: str = "default-nlp-pipeline"
 
     def __init__(self, config: DatabaseConfig):
         # Sync client
