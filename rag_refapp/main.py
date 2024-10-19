@@ -1,6 +1,5 @@
 from fastapi import FastAPI
-
-from .routes import ingest, health
+from rag_refapp.api.routes import health, ingest
 
 app = FastAPI()
 
