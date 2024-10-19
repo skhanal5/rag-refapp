@@ -1,10 +1,10 @@
 from starlette.testclient import TestClient
-from llm_backend.main import app
+from rag_refapp.main import app
 
 client = TestClient(app)
 
 
-def test_read_root():
-    response = client.get("/")
+def test_get_ingest():
+    response = client.get("/ingest/")
     assert response.status_code == 200
     assert response.json() == {"Hello": "World"}

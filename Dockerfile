@@ -29,6 +29,6 @@ FROM base AS runtime
 
 COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
-COPY llm_backend ./llm_backend
+COPY rag_refapp ./rag_refapp
 EXPOSE 8000
-ENTRYPOINT ["python", "-m", "llm_backend.main"]
+ENTRYPOINT ["python", "-m", "rag_refapp.main"]
