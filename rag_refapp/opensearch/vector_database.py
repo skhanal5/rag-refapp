@@ -1,4 +1,4 @@
-from database.database_config import DatabaseConfig
+from opensearch.database_config import DatabaseConfig
 from opensearchpy import OpenSearch
 
 
