@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-from rag_refapp.api.routes import health, ingest
+from rag_refapp.api.routes import health, index
 import uvicorn
 
 app = FastAPI()
 
-app.include_router(ingest.router)
+app.include_router(index.router)
 app.include_router(health.router)
 
 if __name__ == "__main__":
