@@ -3,6 +3,7 @@ from opensearchpy import OpenSearch
 
 
 # TODO: Look at API and determine if any return values are needed
+# TODO: Propagate all exceptions back to user
 class VectorDatabase:
 
     client: OpenSearch
@@ -33,7 +34,7 @@ class VectorDatabase:
         }
         return self.client.indices.create(index_name, body)
 
-    def add_document(self, index_name: str, document: str) -> any:
+    def add_document(self, index_name: str, document: dict) -> any:
         return self.client.index(index=index_name, body=document)
 
     def search_document(self, index_id: str, query: str) -> any:

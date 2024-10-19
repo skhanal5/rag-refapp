@@ -20,6 +20,10 @@ class SetupDetails(BaseModel):
     index_name: str
 
 
+class DocumentDetails(BaseModel):
+    doc_id: str
+
+
 class Document(BaseModel):
     contents: str
 
@@ -36,9 +40,11 @@ async def delete_index(request_body: SetupDetails):
 
 @router.post("/{index_name}/document")
 async def add_document(index_name: str, request_body: Document):
-    return database.add_document(index_name, request_body.contents)
+    return database.add_document(
+        index_name, {"contents": request_body.contents}
+    )
 
 
 @router.delete("/{index_name}/document")
-async def delete_document(index_name: str, request_body: Document):
-    return database.delete_document(index_name, request_body.contents)
+async def delete_document(index_name: str, request_body: DocumentDetails):
+    return database.delete_document(index_name, request_body.doc_id)
