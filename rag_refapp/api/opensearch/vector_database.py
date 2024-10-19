@@ -2,7 +2,7 @@ from .database_config import DatabaseConfig
 from opensearchpy import OpenSearch
 
 
-# TODO: Proper return values
+# TODO: Look at API and determine if any return values are needed
 class VectorDatabase:
 
     client: OpenSearch
@@ -47,19 +47,16 @@ class VectorDatabase:
             },
         }
 
-        response = self.client.search(
+        return self.client.search(
             body=query,
             index=index_id,
         )
-        return response
 
     def delete_document(self, index_name: str, doc_id: str) -> any:
-        response = self.client.delete(
+        return self.client.delete(
             index=index_name,
             id=doc_id,
         )
-        return response
 
     def delete_index(self, index_name: str):
-        response = self.client.indices.delete(index=index_name)
-        return response
+        return self.client.indices.delete(index=index_name)
