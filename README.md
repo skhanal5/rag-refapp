@@ -16,7 +16,7 @@ Run `docker compose up` at the root level.
 Use `poetry run python -m rag_refapp.main` to run using Poetry.
 
 ### Postman
-In `~/postman`, there is a Postman collection containing all the working endpoints of this application that you can use
+In *~/postman~, there is a Postman collection containing all the working endpoints of this application that you can use
 once this app is running.
 
 ### Testing
