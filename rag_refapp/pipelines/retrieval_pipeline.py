@@ -41,7 +41,7 @@ class RetrievalPipeline:
             template=RetrievalPipeline.__system_prompt
         )
         generator = HuggingFaceLocalGenerator(
-            token=Secret.from_token("<your-api-key>")
+            token=Secret.from_token("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")
         )
         generator.warm_up()
 
@@ -49,7 +49,9 @@ class RetrievalPipeline:
         self.pipeline.add_component(
             "text_embedder",
             SentenceTransformersTextEmbedder(
-                token=Secret.from_token("<your-api-key>")
+                token=Secret.from_token(
+                    "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"
+                )
             ),  # Uses default model
         )
         self.pipeline.add_component(
@@ -67,6 +69,9 @@ class RetrievalPipeline:
         self.pipeline.connect("prompt_builder", "llm")
 
         # Execute the pipeline
-        self.pipeline.run(
-            {"prompt_builder": {"query": query}, "retriever": {"query": query}}
+        return self.pipeline.run(
+            {
+                "text_embedder": {"text": query},
+                "prompt_builder": {"question": query},
+            }
         )

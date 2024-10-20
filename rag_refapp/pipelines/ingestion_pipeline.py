@@ -1,8 +1,10 @@
 from pathlib import Path
 
 from haystack import Pipeline
-from haystack.components.converters import TextFileToDocument
-from haystack.components.embedders import SentenceTransformersTextEmbedder
+from haystack.components.converters import (
+    MarkdownToDocument,
+)
+from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 from haystack.components.preprocessors import DocumentCleaner, DocumentSplitter
 from haystack.components.writers import DocumentWriter
 from haystack.utils import Secret
@@ -26,7 +28,7 @@ class IngestionPipeline:
 
         # Add all components for this
         self.pipeline.add_component(
-            instance=TextFileToDocument(), name="text_file_converter"
+            instance=MarkdownToDocument(), name="text_file_converter"
         )
         self.pipeline.add_component(instance=DocumentCleaner(), name="cleaner")
         self.pipeline.add_component(
@@ -35,8 +37,10 @@ class IngestionPipeline:
         )
         self.pipeline.add_component(
             "text_embedder",
-            SentenceTransformersTextEmbedder(
-                token=Secret.from_token("<your-api-key>")
+            SentenceTransformersDocumentEmbedder(
+                token=Secret.from_token(
+                    "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"
+                )
             ),  # Uses default model
         )
         self.pipeline.add_component(instance=document_writer, name="writer")
@@ -46,11 +50,11 @@ class IngestionPipeline:
             "text_file_converter.documents", "cleaner.documents"
         )
         self.pipeline.connect("cleaner.documents", "splitter.documents")
-        self.pipeline.connect("splitter.documents", "writer.documents")
-        self.pipeline.connect("text_embedder", "writer")
+        self.pipeline.connect("splitter.documents", "text_embedder.documents")
+        self.pipeline.connect("text_embedder.documents", "writer.documents")
 
         # Execute the pipeline
-        self.pipeline.run({"embedder": {"documents": files}})
+        return self.pipeline.run({"text_file_converter": {"sources": files}})
 
     @staticmethod
     def __setup_writer():
