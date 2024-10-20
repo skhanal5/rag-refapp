@@ -34,7 +34,7 @@ class RetrievalPipeline:
             hosts="http://localhost:9200",
             use_ssl=True,
             verify_certs=False,
-            http_auth=("admin", "admin"),
+            http_auth=("admin", "@ThisIsMyPassword123"),
         )
 
         prompt_builder = PromptBuilder(
@@ -47,7 +47,10 @@ class RetrievalPipeline:
 
         # Add all components for this pipeline
         self.pipeline.add_component(
-            "text_embedder", SentenceTransformersTextEmbedder(model="model")
+            "text_embedder",
+            SentenceTransformersTextEmbedder(
+                token=Secret.from_token("<your-api-key>")
+            ),  # Uses default model
         )
         self.pipeline.add_component(
             "retriever",
