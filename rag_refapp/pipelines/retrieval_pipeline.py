@@ -13,13 +13,7 @@ from haystack_integrations.document_stores.opensearch import (
 
 class RetrievalPipeline:
 
-    pipeline: Pipeline
-
-    def __init__(self):
-        self.pipeline = Pipeline()
-
-    def execute_pipeline(self, query: str):
-        template = """
+    __system_prompt: str = """
         Given the following information, answer the question.
 
         Context:
@@ -31,6 +25,11 @@ class RetrievalPipeline:
         Answer:
         """
 
+    def __init__(self):
+        self.pipeline = Pipeline()
+
+    def execute_pipeline(self, query: str):
+
         document_store = OpenSearchDocumentStore(
             hosts="http://localhost:9200",
             use_ssl=True,
@@ -38,7 +37,9 @@ class RetrievalPipeline:
             http_auth=("admin", "admin"),
         )
 
-        prompt_builder = PromptBuilder(template=template)
+        prompt_builder = PromptBuilder(
+            template=RetrievalPipeline.__system_prompt
+        )
         generator = HuggingFaceLocalGenerator(
             token=Secret.from_token("<your-api-key>")
         )
