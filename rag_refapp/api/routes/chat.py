@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 from rag_refapp.pipelines.retrieval_pipeline import RetrievalPipeline
 
-router = APIRouter(prefix="/chat", tags=["index"])
+router = APIRouter(prefix="/chat", tags=["chat"])
 
 
 class ChatDetails(BaseModel):
@@ -13,4 +13,4 @@ class ChatDetails(BaseModel):
 @router.post("/")
 async def add_index(request_body: ChatDetails):
     pipeline: RetrievalPipeline = RetrievalPipeline()
-    pipeline.execute_pipeline(request_body.query)
+    return pipeline.execute_pipeline(request_body.query)
