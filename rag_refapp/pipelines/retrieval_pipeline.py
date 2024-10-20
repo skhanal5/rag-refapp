@@ -11,11 +11,10 @@ from haystack_integrations.document_stores.opensearch import (
 )
 
 
-class RAGPipeline:
+class RetrievalPipeline:
 
     pipeline: Pipeline
 
-    # TODO: is this pythonic?
     def __init__(self):
         self.pipeline = Pipeline()
 

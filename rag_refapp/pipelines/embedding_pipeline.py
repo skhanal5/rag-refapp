@@ -1,0 +1,2 @@
+class EmbeddingPipeline:
+    pass
