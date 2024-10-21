@@ -14,6 +14,11 @@ flake8 = "^7.1.1"
 httpx = "^0.27.2"
 pytest = "^8.3.3"
 opensearch-py = "^2.7.1"
+haystack-ai = "^2.6.1"
+opensearch-haystack = "^1.0.0"
+sentence-transformers = "^3.2.0"
+markdown-it-py = "^3.0.0"
+mdit-plain = "^1.0.1"
 
 [tool.black]
 line-length = 79

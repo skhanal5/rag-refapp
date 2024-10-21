@@ -6,8 +6,6 @@ from opensearchpy import OpenSearch
 # TODO: Propagate all exceptions back to user
 class VectorDatabase:
 
-    client: OpenSearch
-
     def __init__(self, config: DatabaseConfig):
         # Sync client
         self.client = OpenSearch(

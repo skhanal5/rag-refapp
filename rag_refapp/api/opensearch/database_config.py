@@ -1,12 +1,5 @@
 class DatabaseConfig:
 
-    hostname: str
-    port: int
-    auth: tuple
-    ssl_flag: bool
-    verify_cert_flag: bool
-    ssl_show_warn: bool
-
     # turn to factory method
     def __init__(
         self,

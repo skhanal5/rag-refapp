@@ -3,7 +3,7 @@
 ### Configuration
 We need to configure the following environment variable `OPENSEARCH_INITIAL_ADMIN_PASSWORD` in the `docker-compose.yml`
 file. `opensearch-node1` and `opensearch-node2` both depend on this to be
-configured to the same value.
+configured to the same value. I have already set this to: `@ThisIsMyPassword123` for now. 
 
 ### Running Locally
 Invoke `docker compose up -d` in this
@@ -34,11 +34,11 @@ in. You should get this response:
 ```
 
 Alternatively, you can sign in at `http://localhost:5601` with username `admin` and
-password `<value of OPENSEARCH_INITIAL_ADMIN_PASSWORD>`.
+password `@ThisIsMyPassword123`.
 
 ### Interacting with OpenSearch using REST
 
 Invoke the health endpoint:
 ```bash
-curl -X GET "https://localhost:9200/_cluster/health" -ku admin:<value of OPENSEARCH_INITIAL_ADMIN_PASSWORD>
+curl -X GET "https://localhost:9200/_cluster/health" -ku admin:@ThisIsMyPassword123
 ```
