@@ -1,7 +1,8 @@
-# minimal-llm-backend
+# rag-refapp
 
 ## About 
-Project that builds a backend that integrates with an LLM.
+This is an API that allows you to interact with a Retrieval Augmented Generation (RAG) system. I made this project primarily
+for learning purposes.
 
 ## Local Development
 
