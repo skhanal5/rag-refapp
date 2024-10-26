@@ -7,14 +7,14 @@ for learning purposes.
 ## Local Development
 
 ### OpenSearch
-Make sure the OpenSearch nodes and dashboard are up and running before using this command. Take a look at [instructions](rag_refapp/api/opensearch/README.md) for
+Make sure the OpenSearch nodes and dashboard are up and running before using this command. Take a look at [instructions](app/api/opensearch/README.md) for
 setting up OpenSearch locally.
 
 ### Running Application with Docker
 Run `docker compose up` at the root level. 
 
 ### Running Application
-Use `poetry run python -m rag_refapp.main` to run using Poetry.
+Use `poetry run python -m app.main` to run using Poetry.
 
 ### Postman
 In *~/postman~, there is a Postman collection containing all the working endpoints of this application that you can use

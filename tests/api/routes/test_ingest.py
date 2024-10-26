@@ -1,5 +1,5 @@
 from starlette.testclient import TestClient
-from rag_refapp.main import app
+from app.main import app
 
 client = TestClient(app)
 
