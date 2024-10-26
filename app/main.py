@@ -1,7 +1,7 @@
 from functools import lru_cache
 
 from fastapi import FastAPI
-from rag_refapp.api.routes import health, index, ingest, chat
+from app.api.routes import health, index, ingest, chat
 import uvicorn
 from . import config
 

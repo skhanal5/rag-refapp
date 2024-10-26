@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from rag_refapp.pipelines.ingestion_pipeline import IngestionPipeline
+from app.pipelines.ingestion_pipeline import IngestionPipeline
 
 router = APIRouter(prefix="/ingest", tags=["ingest"])
 

@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from rag_refapp.api.opensearch.database_config import DatabaseConfig
-from rag_refapp.api.opensearch.vector_database import VectorDatabase
+from app.api.opensearch.database_config import DatabaseConfig
+from app.api.opensearch.vector_database import VectorDatabase
 
 router = APIRouter(prefix="/index", tags=["index"])
 config = DatabaseConfig(
