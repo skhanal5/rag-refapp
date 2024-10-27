@@ -1,8 +1,7 @@
-from pydantic import BaseModel
-from pydantic_settings import SettingsConfigDict
+from pydantic_settings import SettingsConfigDict, BaseSettings
 
 
-class Settings(BaseModel):
+class Settings(BaseSettings):
     hugging_face_token: str
     embedding_model: str
     reranking_model: str

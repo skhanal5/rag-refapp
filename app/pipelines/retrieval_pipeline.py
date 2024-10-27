@@ -1,3 +1,5 @@
+from typing import Any
+
 from haystack import Pipeline
 from haystack.components.builders import PromptBuilder
 from haystack.components.embedders import SentenceTransformersTextEmbedder
@@ -37,7 +39,7 @@ class RetrievalPipeline:
         self._opensearch_config = opensearch_config
         self._settings = settings
 
-    def execute_pipeline(self, query: str):
+    def execute_pipeline(self, query: str) -> Any:
         prompt_builder = PromptBuilder(template=RetrievalPipeline.__system_prompt)
         generator = HuggingFaceLocalGenerator(
             model=self._settings.text_generation_model,

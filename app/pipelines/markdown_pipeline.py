@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Any
 
 from haystack import Pipeline
 from haystack.components.converters import (
@@ -27,7 +28,7 @@ class MarkdownPipeline:
         self._opensearch_config = opensearch_config
         self._settings = settings
 
-    def execute_pipeline(self, path: str):
+    def execute_pipeline(self, path: str) -> Any:
         # TODO: works on markdown only
         files = list(Path(path).glob("*.md"))
 

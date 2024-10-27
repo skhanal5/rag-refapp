@@ -17,3 +17,4 @@ repos:
         additional_dependencies:
           - pydantic
           - pydantic-settings
+          - haystack-ai

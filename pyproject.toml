@@ -21,9 +21,8 @@ pydantic-settings = "^2.6.0"
 ruff = "^0.7.1"
 mypy = "^1.13.0"
 
-[tool.black]
-line-length = 79
-skip-string-normalization = true
+[tool.mypy]
+plugins = ["pydantic.mypy"]
 
 [build-system]
 requires = ["poetry-core"]

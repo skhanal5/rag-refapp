@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from app.config import Settings
 
 
@@ -5,7 +7,7 @@ class OpenSearchConfig:
     def __init__(self, settings: Settings):
         self.hostname: str = settings.opensearch_hostname
         self.port: int = settings.opensearch_port
-        self.auth: (str, str) = (
+        self.auth: Tuple[str, str] = (
             settings.opensearch_username,
             settings.opensearch_password,
         )
