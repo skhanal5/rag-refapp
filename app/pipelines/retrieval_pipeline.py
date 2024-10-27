@@ -10,8 +10,15 @@ from haystack_integrations.document_stores.opensearch import (
     OpenSearchDocumentStore,
 )
 
+from app.config import Settings
+from app.opensearch.database_config import OpenSearchConfig
+
 
 class RetrievalPipeline:
+    """
+    Defines a pipeline that uses RAG functionality to generate
+    a response to a query.
+    """
 
     __system_prompt: str = """
         Given the following information, answer the question.
@@ -25,23 +32,21 @@ class RetrievalPipeline:
         Answer:
         """
 
-    def __init__(self):
+    def __init__(
+        self, opensearch_config: OpenSearchConfig, settings: Settings
+    ):
         self.pipeline = Pipeline()
+        self._opensearch_config = opensearch_config
+        self._settings = settings
 
     def execute_pipeline(self, query: str):
-
-        document_store = OpenSearchDocumentStore(
-            hosts="http://localhost:9200",
-            use_ssl=True,
-            verify_certs=False,
-            http_auth=("admin", "@ThisIsMyPassword123"),
-        )
 
         prompt_builder = PromptBuilder(
             template=RetrievalPipeline.__system_prompt
         )
         generator = HuggingFaceLocalGenerator(
-            token=Secret.from_token("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")
+            model=self._settings.text_generation_model,
+            token=Secret.from_token(self._settings.hugging_face_token),
         )
         generator.warm_up()
 
@@ -49,14 +54,15 @@ class RetrievalPipeline:
         self.pipeline.add_component(
             "text_embedder",
             SentenceTransformersTextEmbedder(
-                token=Secret.from_token(
-                    "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"
-                )
+                model=self._settings.embedding_model,
+                token=Secret.from_token(self._settings.hugging_face_token),
             ),  # Uses default model
         )
         self.pipeline.add_component(
             "retriever",
-            OpenSearchEmbeddingRetriever(document_store=document_store),
+            OpenSearchEmbeddingRetriever(
+                document_store=self.get_document_store()
+            ),
         )
         self.pipeline.add_component("prompt_builder", prompt_builder)
         self.pipeline.add_component("llm", generator)
@@ -75,3 +81,11 @@ class RetrievalPipeline:
                 "prompt_builder": {"question": query},
             }
         )
+
+    def get_document_store(self) -> OpenSearchDocumentStore:
+        document_store = OpenSearchDocumentStore(
+            hosts=self._opensearch_config.hostname,
+            use_ssl=self._opensearch_config.ssl_flag,
+            http_auth=self._opensearch_config.auth,
+        )
+        return document_store
