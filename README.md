@@ -7,7 +7,7 @@ for learning purposes.
 ## Local Development
 
 ### OpenSearch
-Make sure the OpenSearch nodes and dashboard are up and running before using this command. Take a look at [instructions](app/api/opensearch/README.md) for
+Make sure the OpenSearch nodes and dashboard are up and running before using this command. Take a look at [instructions](app/opensearch/README.md) for
 setting up OpenSearch locally.
 
 ### Running Application with Docker
