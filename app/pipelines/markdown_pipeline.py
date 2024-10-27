@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Any
 
 from haystack import Pipeline
 from haystack.components.converters import (
@@ -22,15 +23,12 @@ class MarkdownPipeline:
     your local filesystem
     """
 
-    def __init__(
-        self, opensearch_config: OpenSearchConfig, settings: Settings
-    ):
+    def __init__(self, opensearch_config: OpenSearchConfig, settings: Settings):
         self.pipeline = Pipeline()
         self._opensearch_config = opensearch_config
         self._settings = settings
 
-    def execute_pipeline(self, path: str):
-
+    def execute_pipeline(self, path: str) -> Any:
         # TODO: works on markdown only
         files = list(Path(path).glob("*.md"))
 
@@ -56,9 +54,7 @@ class MarkdownPipeline:
         self.pipeline.add_component(instance=document_writer, name="writer")
 
         # Connect the components together
-        self.pipeline.connect(
-            "text_file_converter.documents", "cleaner.documents"
-        )
+        self.pipeline.connect("text_file_converter.documents", "cleaner.documents")
         self.pipeline.connect("cleaner.documents", "splitter.documents")
         self.pipeline.connect("splitter.documents", "text_embedder.documents")
         self.pipeline.connect("text_embedder.documents", "writer.documents")
