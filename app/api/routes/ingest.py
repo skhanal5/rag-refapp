@@ -18,9 +18,7 @@ class IngestDetails(BaseModel):
 @router.post("/")
 async def ingest_path(
     request_body: IngestDetails,
-    opensearch_config: Annotated[
-        OpenSearchConfig, Depends(get_opensearch_config)
-    ],
+    opensearch_config: Annotated[OpenSearchConfig, Depends(get_opensearch_config)],
     settings: Annotated[Settings, Depends(get_settings)],
 ):
     pipeline: MarkdownPipeline = MarkdownPipeline(opensearch_config, settings)
