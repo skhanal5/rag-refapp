@@ -1,18 +1,17 @@
-from .database_config import DatabaseConfig
+from database_config import OpenSearchConfig
 from opensearchpy import OpenSearch
 
 
 # TODO: Look at API and determine if any return values are needed
 # TODO: Propagate all exceptions back to user
-class VectorDatabase:
+class OpenSearchClient:
 
-    def __init__(self, config: DatabaseConfig):
+    def __init__(self, config: OpenSearchConfig):
         # Sync client
         self.client = OpenSearch(
             hosts=[{"host": config.hostname, "port": config.port}],
             http_auth=config.auth,
             use_ssl=config.ssl_flag,
-            verify_certs=config.verify_cert_flag,
         )
 
     def create_index(self, index_name: str) -> any:

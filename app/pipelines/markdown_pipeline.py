@@ -12,11 +12,22 @@ from haystack_integrations.document_stores.opensearch import (
     OpenSearchDocumentStore,
 )
 
+from app.config import Settings
+from app.opensearch.database_config import OpenSearchConfig
 
-class IngestionPipeline:
 
-    def __init__(self):
+class MarkdownPipeline:
+    """
+    Defines a pipeline to ingest markdown files from
+    your local filesystem
+    """
+
+    def __init__(
+        self, opensearch_config: OpenSearchConfig, settings: Settings
+    ):
         self.pipeline = Pipeline()
+        self._opensearch_config = opensearch_config
+        self._settings = settings
 
     def execute_pipeline(self, path: str):
 
@@ -24,7 +35,7 @@ class IngestionPipeline:
         files = list(Path(path).glob("*.md"))
 
         # Init dependencies for components
-        document_writer = IngestionPipeline.__setup_writer()
+        document_writer = self._setup_writer()
 
         # Add all components for this
         self.pipeline.add_component(
@@ -38,9 +49,8 @@ class IngestionPipeline:
         self.pipeline.add_component(
             "text_embedder",
             SentenceTransformersDocumentEmbedder(
-                token=Secret.from_token(
-                    "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"
-                )
+                model=self._settings.embedding_model,
+                token=Secret.from_token(self._settings.hugging_face_token),
             ),  # Uses default model
         )
         self.pipeline.add_component(instance=document_writer, name="writer")
@@ -56,13 +66,11 @@ class IngestionPipeline:
         # Execute the pipeline
         return self.pipeline.run({"text_file_converter": {"sources": files}})
 
-    @staticmethod
-    def __setup_writer():
+    def _setup_writer(self) -> DocumentWriter:
         document_store = OpenSearchDocumentStore(
-            hosts="http://localhost:9200",
-            use_ssl=True,
-            verify_certs=False,
-            http_auth=("admin", "@ThisIsMyPassword123"),
+            hosts=self._opensearch_config.hostname,
+            use_ssl=self._opensearch_config.ssl_flag,
+            http_auth=self._opensearch_config.auth,
         )
         document_writer = DocumentWriter(document_store=document_store)
         return document_writer

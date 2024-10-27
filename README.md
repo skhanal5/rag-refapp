@@ -1,19 +1,38 @@
-# minimal-llm-backend
+# rag-refapp
 
 ## About 
-Project that builds a backend that integrates with an LLM.
+This is an API that allows you to interact with a Retrieval Augmented Generation (RAG) system. I made this project primarily
+for learning purposes.
 
 ## Local Development
 
+### Environment
+Define a `.env` file at the root project directory. It should end up looking like this:
+
+```yaml
+# Hugging Face Configuration
+HUGGING_FACE_TOKEN=FOO
+EMBEDDING_MODEL=baai/bge-m3
+RERANKING_MODEL=baai/bge-reranker
+TEXT_GENERATION_MODEL=meta-llama/Meta-Llama-3-8B
+
+# OpenSearch Configuration
+OPENSEARCH_HOSTNAME=localhost
+OPENSEARCH_PORT=9200
+OPENSEARCH_USERNAME=admin
+OPENSEARCH_PASSWORD=BAR
+OPENSEARCH_SSL_FLAG=true
+```
+
 ### OpenSearch
-Make sure the OpenSearch nodes and dashboard are up and running before using this command. Take a look at [instructions](rag_refapp/api/opensearch/README.md) for
+Make sure the OpenSearch nodes and dashboard are up and running before using this command. Take a look at [instructions](app/opensearch/README.md) for
 setting up OpenSearch locally.
 
 ### Running Application with Docker
 Run `docker compose up` at the root level. 
 
 ### Running Application
-Use `poetry run python -m rag_refapp.main` to run using Poetry.
+Use `poetry run python -m app.main` to run using Poetry.
 
 ### Postman
 In *~/postman~, there is a Postman collection containing all the working endpoints of this application that you can use

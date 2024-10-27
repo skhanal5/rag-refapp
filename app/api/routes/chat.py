@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from rag_refapp.pipelines.retrieval_pipeline import RetrievalPipeline
+from app.pipelines.retrieval_pipeline import RetrievalPipeline
 
 router = APIRouter(prefix="/chat", tags=["chat"])
 

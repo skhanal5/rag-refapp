@@ -19,6 +19,7 @@ opensearch-haystack = "^1.0.0"
 sentence-transformers = "^3.2.0"
 markdown-it-py = "^3.0.0"
 mdit-plain = "^1.0.1"
+pydantic-settings = "^2.6.0"
 
 [tool.black]
 line-length = 79
