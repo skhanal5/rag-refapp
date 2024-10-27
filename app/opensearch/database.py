@@ -4,7 +4,7 @@ from opensearchpy import OpenSearch
 
 # TODO: Look at API and determine if any return values are needed
 # TODO: Propagate all exceptions back to user
-class OpenSearchDatabase:
+class OpenSearchClient:
 
     def __init__(self, config: OpenSearchConfig):
         # Sync client

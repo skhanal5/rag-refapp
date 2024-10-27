@@ -3,7 +3,6 @@ from app.config import Settings
 
 class OpenSearchConfig:
 
-    # turn to factory method
     def __init__(self, settings: Settings):
         self.hostname = settings.opensearch_hostname
         self.port = settings.opensearch_port
